@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "../components/layout/navbar.jsx";
+import ExpertSection from "../components/expertsection/expertsection.jsx";
 
 const Page = () => {
   return (
@@ -46,6 +47,7 @@ const Page = () => {
           </div>
         </div>
       </div>
+      <ExpertSection />
     </div>
   );
 };
