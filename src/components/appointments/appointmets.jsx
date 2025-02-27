@@ -23,7 +23,7 @@ export default function AppointmentForm() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  };  
 
   const handleSubmit = (e) => {
     e.preventDefault();
