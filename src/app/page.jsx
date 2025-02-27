@@ -42,7 +42,7 @@ const Page = () => {
                 hover:scale-105
               "
             >
-              Find an Expert
+              Book Appointment
             </button>
           </div>
         </div>
