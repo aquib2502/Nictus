@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 export default function AboutUs() {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-[#601818] px-6 py-12 relative"
-      
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-6 py-12 relative"
+      style={{ backgroundImage: "url('/bg-image.jpg')" }}
     >
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      {/* Deep Green Overlay with Blur */}
+      <div className="absolute inset-0 bg-[#3C5A40] bg-opacity-60 backdrop-blur-md"></div>
 
       {/* Page Title */}
       <motion.div 
@@ -18,7 +18,7 @@ export default function AboutUs() {
         transition={{ duration: 0.8, ease: "easeOut" }} 
         className="max-w-4xl text-center relative z-10"
       >
-        <h1 className="text-5xl font-extrabold text-white">About Our Consultancy</h1>
+        <h1 className="text-5xl font-extrabold text-[#C1A35F]">About Our Consultancy</h1>
       </motion.div>
 
       {/* Content Sections */}
@@ -29,9 +29,9 @@ export default function AboutUs() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
           whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-          className="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg border border-gray-200 transition-all"
+          className="bg-[#F8F2E7] p-8 rounded-xl shadow-lg border border-gray-200 transition-all"
         >
-          <h2 className="text-3xl font-bold text-black">Our Mission</h2>
+          <h2 className="text-3xl font-bold text-[#3C5A40]">Our Mission</h2>
           <p className="mt-4 text-gray-700 leading-relaxed">
             Our mission is to empower businesses with expert solutions that drive growth, innovation, and long-term success.
             We aim to bridge the gap between strategy and execution by offering tailored financial planning, operational efficiency, 
@@ -50,9 +50,9 @@ export default function AboutUs() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
           whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-          className="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg border border-gray-200 transition-all"
+          className="bg-[#F8F2E7] p-8 rounded-xl shadow-lg border border-gray-200 transition-all"
         >
-          <h2 className="text-3xl font-bold text-black">Our Vision</h2>
+          <h2 className="text-3xl font-bold text-[#3C5A40]">Our Vision</h2>
           <p className="mt-4 text-gray-700 leading-relaxed">
             Our vision is to become the most trusted and impactful consultancy firm globally.
             We strive to set new industry standards by continuously innovating and adapting to the changing business landscape.

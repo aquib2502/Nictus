@@ -1,110 +1,113 @@
 "use client";
+import React, { useState } from "react";
 
-import React from "react";
-import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
-import { motion } from "framer-motion";
 
-export default function ContactUs() {
+export default function ContactUsPage() {
+  const [blurBg, setBlurBg] = useState(false);
+
+  const handleFocus = () => setBlurBg(true);
+  const handleBlur = () => setBlurBg(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Message submitted");
+  };
+
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center relative px-4"
+      className="relative min-h-screen bg-cover bg-center flex flex-col"
       style={{ backgroundImage: "url('/bg-image.jpg')" }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      {/* Deep Green Overlay with Conditional Blur */}
+      <div
+        className={`
+          absolute inset-0 bg-[#3C5A40] bg-opacity-60 transition-all duration-300
+          ${blurBg ? "backdrop-blur-md" : ""}
+        `}
+      ></div>
+
+   
 
       {/* Contact Form Container */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        whileHover={{ scale: 1.02, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
-        className="relative bg-[#b06324]  p-10 rounded-2xl shadow-xl max-w-lg w-full text-black mt-10 mb-10"
-      >
-        <motion.h1 
-          initial={{ opacity: 0, y: -30 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-4xl font-bold text-center text-gray-900"
-        >
-          Contact Us
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: -20 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="text-gray-600 text-center mt-2"
-        >
-          We'd love to hear from you!
-        </motion.p>
+      <div className="relative z-10 flex-grow flex items-center justify-center">
+        <div className="w-full max-w-lg bg-[#F8F2E7] p-8 rounded shadow-lg animate-popUp">
+          <h2 className="text-3xl font-bold text-center text-[#3C5A40] mb-6">
+            Contact Us
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-[#3C5A40] font-semibold mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#C1A35F] text-[#3C5A40]"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-[#3C5A40] font-semibold mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#C1A35F] text-[#3C5A40]"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-[#3C5A40] font-semibold mb-1">
+                Subject
+              </label>
+              <input
+                type="text"
+                placeholder="Subject"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#C1A35F] text-[#3C5A40]"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-[#3C5A40] font-semibold mb-1">
+                Message
+              </label>
+              <textarea
+                placeholder="Your Message"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#C1A35F] text-[#3C5A40] h-32"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#C1A35F] text-black py-2 rounded hover:bg-[#c8ae68] transition-colors font-semibold"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
 
-        {/* Contact Details */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-          className="mt-5 space-y-4 text-gray-800"
-        >
-          <div className="flex items-center gap-3">
-            <FaEnvelope className="text-blue-500 text-lg" />
-            <p className="text-sm">aquibhingwala@gmail.com</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaPhone className="text-blue-500 text-lg" />
-            <p className="text-sm">+91 9898987656</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaMapMarkerAlt className="text-blue-500 text-lg" />
-            <p className="text-sm">123 Main Street, NY</p>
-          </div>
-        </motion.div>
-
-        {/* Form Section */}
-        <motion.form 
-          initial={{ opacity: 0, y: 30 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-          className="mt-6 space-y-5"
-        >
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Full Name</label>
-            <motion.input
-              whileFocus={{ scale: 1.02, borderColor: "#3b82f6", boxShadow: "0px 4px 10px rgba(59, 130, 246, 0.2)" }}
-              type="text"
-              className="w-full px-4 py-3 bg-gray-100 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              placeholder="Your Name"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Email Address</label>
-            <motion.input
-              whileFocus={{ scale: 1.02, borderColor: "#3b82f6", boxShadow: "0px 4px 10px rgba(59, 130, 246, 0.2)" }}
-              type="email"
-              className="w-full px-4 py-3 bg-gray-100 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              placeholder="example@gmail.com"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Message</label>
-            <motion.textarea
-              whileFocus={{ scale: 1.02, borderColor: "#3b82f6", boxShadow: "0px 4px 10px rgba(59, 130, 246, 0.2)" }}
-              className="w-full px-4 py-3 bg-gray-100 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              placeholder="Write your message..."
-              rows={4}
-            ></motion.textarea>
-          </div>
-
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: "#2563eb", boxShadow: "0px 4px 15px rgba(37, 99, 235, 0.4)" }}
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
-          >
-            Send Message
-          </motion.button>
-        </motion.form>
-      </motion.div>
+      {/* Pop-Up Animation Keyframes */}
+      <style jsx>{`
+        @keyframes popUp {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-popUp {
+          animation: popUp 0.5s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }

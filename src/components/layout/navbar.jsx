@@ -19,7 +19,7 @@ export default function Navbar() {
 
       {/* Navbar Links on the Right */}
       <div className="flex items-center space-x-6">
-        {["Home", "About Us", "Contact Us"].map((section) => {
+        {["Home", "AboutUs", "ContactUs"].map((section) => {
           const link = section.toLowerCase().replace(" ", "-");
           return (
             <Link key={section} href={`/${link}`}>
