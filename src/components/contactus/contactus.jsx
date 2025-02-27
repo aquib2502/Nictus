@@ -37,7 +37,7 @@ export default function ContactUs() {
             <input
               type="text"
               className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              placeholder="John Doe"
+              placeholder="Your Name"
             />
           </div>
 
@@ -46,7 +46,7 @@ export default function ContactUs() {
             <input
               type="email"
               className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-              placeholder="you@example.com"
+              placeholder="example@gmail.com"
             />
           </div>
 
