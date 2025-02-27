@@ -5,12 +5,21 @@ import { motion } from "framer-motion";
 
 export default function AppointmentForm() {
   const [formData, setFormData] = useState({
+    category: "",
     date: "",
     timeSlot: "",
+    name: "",
+    mobile: "",
     reason: "",
   });
 
-  const isFormValid = formData.date && formData.timeSlot && formData.reason;
+  const isFormValid =
+    formData.category &&
+    formData.date &&
+    formData.timeSlot &&
+    formData.name &&
+    formData.mobile &&
+    formData.reason;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,13 +47,35 @@ export default function AppointmentForm() {
           Book an Appointment
         </motion.h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mt-4 space-y-6"
-        >
-          {/* Date Input */}
+        <form onSubmit={handleSubmit} className="mt-4 space-y-5">
+          {/* Category Selection */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <label htmlFor="category" className="block text-gray-700 font-medium mb-1">
+              Select Category
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none transition-shadow"
+              required
+            >
+              <option value="" disabled>Select a category</option>
+              <option value="General Consultation">General Consultation</option>
+              <option value="Dental Checkup">Dental Checkup</option>
+              <option value="Eye Checkup">Eye Checkup</option>
+              <option value="Specialist Visit">Specialist Visit</option>
+            </select>
+          </motion.div>
+
+          {/* Date Input */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
           >
@@ -64,7 +95,7 @@ export default function AppointmentForm() {
 
           {/* Time Slot Selection */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
@@ -87,11 +118,53 @@ export default function AppointmentForm() {
             </select>
           </motion.div>
 
-          {/* Reason for Appointment */}
+          {/* Name of Appointee */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+          >
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-1">
+              Name of Appointee
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none transition-shadow"
+              placeholder="Enter full name"
+              required
+            />
+          </motion.div>
+
+          {/* Mobile Number */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
+          >
+            <label htmlFor="mobile" className="block text-gray-700 font-medium mb-1">
+              Mobile No.
+            </label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none transition-shadow"
+              placeholder="Enter mobile number"
+              required
+            />
+          </motion.div>
+
+          {/* Reason for Appointment */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.6 }}
           >
             <label htmlFor="reason" className="block text-gray-700 font-medium mb-1">
               Reason for Appointment
@@ -114,7 +187,7 @@ export default function AppointmentForm() {
             disabled={!isFormValid}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
             whileHover={{ scale: isFormValid ? 1.05 : 1 }}
             className={`w-full py-3 rounded-lg font-semibold transition duration-300 ${
               isFormValid
