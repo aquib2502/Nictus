@@ -19,7 +19,18 @@ export default function Navbar() {
 
       {/* Navbar Links on the Right */}
       <div className="flex items-center space-x-6">
-        {["Home", "AboutUs", "ContactUs"].map((section) => {
+      <Link key="home" href={`/`}>
+              <span
+                className={`px-4 py-2 rounded-full font-semibold transition-all cursor-pointer ${
+                  activeSection === `/`
+                    ? "bg-white text-black shadow-md"
+                    : "text-white hover:bg-white hover:text-black"
+                }`}
+              >
+                Home
+              </span>
+            </Link>
+        {["AboutUs", "ContactUs"].map((section) => {
           const link = section.toLowerCase().replace(" ", "-");
           return (
             <Link key={section} href={`/${link}`}>

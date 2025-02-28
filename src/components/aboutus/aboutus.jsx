@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Navbar from "../../components/layout/navbar.jsx";
 
 export default function AboutUs() {
   return (
@@ -8,6 +9,7 @@ export default function AboutUs() {
       className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-6 py-12 relative"
       style={{ backgroundImage: "url('/bg-image.jpg')" }}
     >
+      <Navbar />
       {/* Deep Green Overlay with Blur */}
       <div className="absolute inset-0 bg-[#3C5A40] bg-opacity-60 backdrop-blur-md"></div>
 

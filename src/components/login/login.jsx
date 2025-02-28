@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Use Next.js router for redirection
+import { useRouter } from "next/navigation";
 import axios from "axios";
+import Navbar from "../../components/layout/navbar.jsx";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,71 +10,93 @@ export default function Login() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    mobile: "",
     password: "",
     confirmPassword: "",
   });
+
   const [message, setMessage] = useState(""); // Success message state
   const [error, setError] = useState(""); // Error message state
-  const router = useRouter(); // Initialize Next.js router
+  const router = useRouter();
 
-  // Check if user is already logged in and redirect
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
-      router.push("/"); // Redirect logged-in users to home
+      router.push("/");
     }
   }, []);
 
-  // Handle input changes
+  // Regex for validation
+  const emailRegex = /^(?!\.)([a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,})$/;
+  const mobileRegex = /^\d{10}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Login Submission
+  // ✅ Handle Login Submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
-        email: formData.email,
-        password: formData.password,
-      }, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true, // Ensures cookies are sent if required
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        { email: formData.email, password: formData.password },
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
 
-      const token = response.data.token; // Assuming the token is returned from backend
-      localStorage.setItem("authToken", token); // Store the token for persistent login
-
+      const token = response.data.token;
+      localStorage.setItem("authToken", token);
       setMessage("Login Successful! Redirecting...");
       setError("");
 
       setTimeout(() => {
-        router.push("/"); // Redirect to home page after login
+        router.push("/");
       }, 2000);
     } catch (error) {
-      console.error("Login Error:", error.response?.data || error.message);
-      setError("Invalid email or password");
+      setError(error.response?.data?.message || "Invalid email or password");
     }
   };
 
-  // Handle Register Submission
+  // ✅ Handle Register Submission
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // 🔴 Validate Email
+    if (!emailRegex.test(formData.email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    // 🔴 Validate Mobile
+    if (!mobileRegex.test(formData.mobile)) {
+      setError("Mobile number must be exactly 10 digits.");
+      return;
+    }
+
+    // 🔴 Validate Password
+    if (!passwordRegex.test(formData.password)) {
+      setError("Password must have at least 6 characters, 1 uppercase letter, and 1 special character.");
+      return;
+    }
+
+    // 🔴 Check Password Match
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError("Passwords do not match.");
       return;
     }
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      }, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          name: formData.name,
+          email: formData.email,
+          mobile: formData.mobile,
+          password: formData.password,
+        },
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
 
       setMessage("Registered Successfully! Redirecting to login...");
       setError("");
@@ -83,23 +106,19 @@ export default function Login() {
         setMessage("");
       }, 3000);
     } catch (error) {
-      console.error("Registration Error:", error.response?.data || error.message);
-      setError("Registration failed. Try again.");
+      setError(error.response?.data?.message || "Registration failed. Try again.");
     }
   };
 
-  // Toggle between Login and Register forms
+  // ✅ Toggle between Login and Register forms
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+    setFormData({ name: "", email: "", mobile: "", password: "", confirmPassword: "" });
     setError("");
     setMessage("");
   };
 
-  // When any input gains focus, blur the background
   const handleFocus = () => setBlurBg(true);
-
-  // When any input loses focus, remove the blur
   const handleBlur = () => setBlurBg(false);
 
   return (
@@ -107,27 +126,22 @@ export default function Login() {
       className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: "url('/bg-image.jpg')" }}
     >
+      <Navbar />
       {/* Background Overlay */}
       <div
-        className={`absolute inset-0 bg-[#3C5A40] bg-opacity-60 transition-all duration-300 ${blurBg ? "backdrop-blur-md" : ""}`}
+        className={`absolute inset-0 bg-[#3C5A40] bg-opacity-60 transition-all duration-300 ${
+          blurBg ? "backdrop-blur-md" : ""
+        }`}
       ></div>
 
       {/* Form Container */}
       <div className="relative z-10 w-full max-w-md bg-[#F8F2E7] p-8 rounded shadow-lg">
-        {/* Heading */}
         <h2 className="text-2xl font-bold mb-6 text-center text-[#3C5A40]">
           {isLogin ? "Login" : "Register"}
         </h2>
 
-        {/* Success Message */}
-        {message && (
-          <p className="mb-4 text-center text-green-500 font-medium">{message}</p>
-        )}
-
-        {/* Error Message */}
-        {error && (
-          <p className="mb-4 text-center text-red-500 font-medium">{error}</p>
-        )}
+        {message && <p className="mb-4 text-center text-green-500 font-medium">{message}</p>}
+        {error && <p className="mb-4 text-center text-red-500 font-medium">{error}</p>}
 
         {/* Form */}
         <form onSubmit={isLogin ? handleLogin : handleRegister}>
@@ -163,6 +177,23 @@ export default function Login() {
             />
           </div>
 
+          {!isLogin && (
+            <div className="mb-4">
+              <label className="block text-[#3C5A40]">Mobile Number</label>
+              <input
+                type="text"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="Enter your mobile number"
+                className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring-2 focus:ring-[#C1A35F] text-[#3C5A40]"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                required
+              />
+            </div>
+          )}
+
           <div className="mb-4">
             <label className="block text-[#3C5A40]">Password</label>
             <input
@@ -195,19 +226,14 @@ export default function Login() {
             </div>
           )}
 
-          <button
-            type="submit"
-            className="w-full bg-[#C1A35F] text-black py-2 rounded hover:bg-[#c8ae68] transition-colors font-semibold"
-          >
+          <button className="w-full bg-[#C1A35F] text-black py-2 rounded hover:bg-[#c8ae68] transition-colors font-semibold">
             {isLogin ? "Login" : "Register"}
           </button>
         </form>
 
         <div className="mt-4 text-center">
           <button onClick={toggleForm} className="text-[#561A1A] hover:underline">
-            {isLogin
-              ? "Don't have an account? Register here"
-              : "Already have an account? Login here"}
+            {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
           </button>
         </div>
       </div>

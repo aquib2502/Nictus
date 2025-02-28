@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Navbar from "../../components/layout/navbar.jsx";
 
 
 export default function ContactUsPage() {
@@ -18,6 +19,7 @@ export default function ContactUsPage() {
       className="relative min-h-screen bg-cover bg-center flex flex-col"
       style={{ backgroundImage: "url('/bg-image.jpg')" }}
     >
+      <Navbar />
       {/* Deep Green Overlay with Conditional Blur */}
       <div
         className={`
